@@ -1,0 +1,36 @@
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb_container
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: healthcare_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./init-mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    networks:
+      - etl_network
+
+  etl_app:
+    build: .
+    container_name: etl_migration_script
+    depends_on:
+      - mongodb
+    environment:
+      # On utilise l'utilisateur 'app_user' créé par le script d'init, pas le root
+      MONGO_URI: mongodb://app_user:app_password_secure@mongodb:27017/healthcare_db
+      MONGO_DB: healthcare_db
+      MONGO_COLLECTION: patients
+      BATCH_SIZE: 1000
+    networks:
+      - etl_network
+
+volumes:
+  mongo_data:
+
+networks:
+  etl_network:
