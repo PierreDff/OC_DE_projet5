@@ -6,6 +6,38 @@ Dans le cadre de la modernisation de l'infrastructure de données d'un client du
 
 L'objectif est de résoudre les problèmes de scalabilité actuels en passant d'un format plat (CSV) à une architecture distribuée et conteneurisée via Docker, préparant ainsi le terrain pour un futur déploiement Cloud (AWS).
 
+Ce projet implémente un pipeline ETL (Extract, Transform, Load) conteneurisé pour migrer un jeu de données de santé (healthcare_dataset.csv) vers une base de données MongoDB.
+
+L'application est construite en Python 3.9, gérée par uv pour les dépendances, et orchestrée via Docker Compose.
+
+## Fonctionnalités
+Extraction & Nettoyage : Lecture du CSV, normalisation des noms, typage des dates, formatage des colonnes en snake_case et déduplication.
+
+Migration MongoDB : Insertion performante par lots (batch processing) pour gérer la charge.
+
+Idempotence : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
+
+Optimisation : Création automatique d'index (simples et composés) après la migration.
+
+Sécurité : Gestion des accès bases de données via variables d'environnement et script d'initialisation.
+
+## Stack Technique
+Langage : Python 3.9
+
+Base de données : MongoDB 8.0
+
+Dépendances :
+
+pandas : Manipulation et nettoyage des données.
+
+pymongo : Driver MongoDB.
+
+pydantic-settings : Gestion robuste de la configuration.
+
+uv : Gestionnaire de paquets ultra-rapide (utilisé dans le build Docker).
+
+Infrastructure : Docker & Docker Compose.
+
 ## Architecture Technique
 ```
 .
