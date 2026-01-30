@@ -132,7 +132,7 @@ JSON
 ```
 {
   "_id": "ObjectId(...)",
-  "name": "Bobby Jackson",
+  "name": "B**** J******",
   "age": 30,
   "gender": "Male",
   "blood_type": "B-"
