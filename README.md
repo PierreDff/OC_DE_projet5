@@ -26,7 +26,7 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
   * `pandas` : Manipulation et nettoyage des données.
   * `pymongo` : Driver MongoDB.
   * `pydantic-settings` : Gestion robuste de la configuration.
-  * `uv` : Gestionnaire de paquets ultra-rapide (utilisé dans le build Docker).
+  * `uv` : Gestionnaire de paquets (utilisé dans le build Docker).
 * **Infrastructure** : Docker & Docker Compose.
 
 ```
