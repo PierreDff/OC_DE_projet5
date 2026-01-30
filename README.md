@@ -17,7 +17,9 @@ etl_script : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transf
 ### Prérequis
 [Docker Desktop](https://www.docker.com/get-started/) installé et lancé.
 
-[Git](https://git-scm.com/) (pour cloner le dépôt).
+[Git](https://git-scm.com/) pour cloner le dépôt.
+
+[MongoDB Compass](https://www.mongodb.com/products/tools/compass) pour visualiser les datas et faire des requêtes.
 
 ### Installation et Lancement
 1. Cloner le dépôt :
