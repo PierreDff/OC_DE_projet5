@@ -74,10 +74,10 @@ etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform
 1. Cloner le dépôt :
 
 ```
-git clone https://github.com/PierreDff/OC_DE_projet5.git \
+git clone https://github.com/PierreDff/OC_DE_projet5.git
 cd OC_DE_projet5.git 
 ```
-2. Créer votre .env
+2. Créer votre .env \
 Dupliquer le fichier d'exemple et définissez vos variables
 ```
 # Identifiants Application
