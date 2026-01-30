@@ -7,6 +7,7 @@ Dans le cadre de la modernisation de l'infrastructure de données d'un client du
 L'objectif est de résoudre les problèmes de scalabilité actuels en passant d'un format plat (CSV) à une architecture distribuée et conteneurisée via Docker, préparant ainsi le terrain pour un futur déploiement Cloud (AWS).
 
 ## Architecture Technique
+```
 .
 ├── .env                   			# variables d'environnement
 ├── Dockerfile             			# configuration de l'image Docker
@@ -30,6 +31,7 @@ L'objectif est de résoudre les problèmes de scalabilité actuels en passant d'
 │   └── unit/               		# Tests unitaires
 │       └── test_process_data.py
 └── README.md               		# Description du projet, guide d'utilisation
+```
 
 Le projet utilise Docker Compose pour orchestrer deux services principaux :
 
