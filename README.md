@@ -9,7 +9,7 @@ L'objectif est de résoudre les problèmes de scalabilité actuels en passant d'
 ## Architecture Technique
 Le projet utilise Docker Compose pour orchestrer deux services principaux :
 
-mongodb : Le serveur de base de données (NoSQL).
+MongoDB : Le serveur de base de données.
 
 etl_script : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
     
