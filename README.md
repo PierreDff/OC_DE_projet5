@@ -77,15 +77,9 @@ etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform
 git clone https://github.com/PierreDff/OC_DE_projet5.git \
 cd OC_DE_projet5.git 
 ```
-2.
-Le projet nécessite un fichier `.env` pour fonctionner.
-
+2. Créer votre .env
 ```bash
-# Dupliquer le fichier d'exemple (à créer si absent)
-cp .env.example .env
-```
-
-Ouvrez le fichier `.env` et définissez vos variables (NE PAS commiter ce fichier) :
+# Dupliquer le fichier d'exemple et définissez vos variables
 
 ```ini
 # Identifiants Application
