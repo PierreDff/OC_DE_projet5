@@ -1,16 +1,133 @@
-$readmeContent = @"
-# Projet de Migration Healthcare
+# Migrez des données médicales à l'aide du NoSQL
+Projet 5 de la formation Data Engineer d'Open Classrooms
 
-## Description
-Pipeline ETL pour migrer des données de santé depuis un CSV vers MongoDB.
+## Contexte du Projet
+Dans le cadre de la modernisation de l'infrastructure de données d'un client du secteur médical, ce projet vise à migrer un historique de patients (format CSV) vers une base de données NoSQL MongoDB.
 
-## Installation
-1. Installer uv
-2. Lancer 'uv sync'
+L'objectif est de résoudre les problèmes de scalabilité actuels en passant d'un format plat (CSV) à une architecture distribuée et conteneurisée via Docker, préparant ainsi le terrain pour un futur déploiement Cloud (AWS).
 
-## Structure
-- src/ : Code source
-- tests/ : Tests unitaires et d'intégration
-"@
+## Architecture Technique
+Le projet utilise Docker Compose pour orchestrer deux services principaux :
 
-Set-Content -Path "README.md" -Value $readmeContent
+mongodb : Le serveur de base de données (NoSQL).
+
+etl_script : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
+    
+## Guide de Démarrage
+### Prérequis
+[Docker Desktop](https://www.docker.com/get-started/) installé et lancé.
+
+[Git](https://git-scm.com/) (pour cloner le dépôt).
+
+### Installation et Lancement
+1. Cloner le dépôt :
+
+```
+git clone https://github.com/PierreDff/OC_DE_projet5.git \
+cd OC_DE_projet5.git 
+```
+
+2. Lancer la migration (construction des images et démarrage) :
+
+```
+docker-compose up --build
+```
+
+3. Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.\
+Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
+
+## Modélisation des Données (Schema Design)
+
+Collection : patients
+
+
+Champ | Type | Description
+------|------|------------
+```Name``` | string | Nom
+```Age``` | int |	Âge
+```Gender```| string | Genre
+```Blood_Type``` | string | Groupe sanguin
+```Medical_Condition``` | string | Pathologie
+```Date_of_Admission```| date| Date d'admission
+```Doctor``` | string | Médecin en charge
+```Hospital``` | string | Nom de l'hôpital d'admission
+```Insurance_Provider``` | string | Nom de l'assureur
+```Billing_Amount``` | float| Montant de la facture
+```Room_Number``` | int | Numéro de chambre
+```Admission_Type``` | string | Type d'admission (Urgence...)
+```Discharge_Date``` | date | Date de sortie
+```Medication``` | string | Médication
+```Test_Results``` | string | Résultats des tests médicaux
+
+Exemple de Document :
+
+JSON
+```
+{
+  "_id": "ObjectId(...)",
+  "name": "Bobby Jackson",
+  "age": 30,
+  "gender": "Male",
+  "blood_type": "B-"
+  "date_admission": ISODate("2024-01-31T00:00:00Z"),
+  "hospital": "Sons and Miller",
+  "admission_type": "Urgent",
+  "doctor": "Matthew Smith"
+  "condition": "Cancer",
+  "medication": "Paracetamol",
+  "test_results": "Normal"
+  "provider": "Blue Cross",
+  "billing_amount": 18856.28
+  "room_number": 328,
+  "admission_type": "Urgent",
+  "discharge_date": ISODate("2024-02-02T00:00:00.000Z"),
+  "medication": "Paracetamol",
+  "test_results": "Normal"
+  }
+
+```
+Justification : Cette structure réduit le besoin de jointures coûteuses et regroupe les données qui sont souvent consultées ensemble.
+
+## Logique du Script de Migration (ETL)
+Le script migrate.py suit les étapes suivantes :
+
+Extract (Extraction) : Chargement du CSV via Pandas.
+
+Clean (Nettoyage) :
+
+Suppression des doublons (534 doublons identifiés lors de l'audit).
+
+Normalisation des noms (Mise en format "Title Case").
+
+Transform (Transformation) :
+
+Conversion des chaînes de caractères "Dates" en objets ISODate (format natif MongoDB).
+
+Restructuration des colonnes plates en dictionnaires imbriqués.
+
+Load (Chargement) :
+
+Utilisation de insert_many() pour une insertion en masse optimisée.
+
+Indexation : Création d'index sur patient_info.name et admission_details.date_admission pour accélérer les recherches futures.
+
+## Sécurité et Gestion des Utilisateurs
+Dans cet environnement Dockerisé, l'authentification est gérée via les variables d'environnement (voir docker-compose.yml).
+
+Rôles définis :
+
+Root (Admin) : Droits complets sur le cluster. Créé au lancement du conteneur Mongo.
+
+App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db hospital_db uniquement) au lieu du root.
+
+## Choix Techniques
+Pourquoi MongoDB ? La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
+
+Pourquoi Docker ? Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
+
+☁️ Prochaines étapes (Roadmap AWS)
+Déploiement de l'image Docker sur Amazon ECR (Elastic Container Registry).
+
+Hébergement du script sur Amazon ECS (Elastic Container Service).
+
+Migration de la base de données vers MongoDB Atlas sur AWS ou Amazon DocumentDB.
