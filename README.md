@@ -13,12 +13,12 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 ## 📋 Fonctionnalités
 
 * **Extraction & Nettoyage** : Lecture du CSV, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
-* **Migration MongoDB** : Insertion performante par lots (*batch processing*) pour gérer la charge.
+* **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
 * **Idempotence** : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
 * **Optimisation** : Création automatique d'index (simples et composés) sur les champs `name`, `admission_type` et `date_of_admission` après la migration.
 * **Sécurité** : Gestion des accès bases de données via variables d'environnement et script d'initialisation.
 
-## 🛠️ Stack Technique
+## 🛠️ Stack et architecture Technique
 
 * **Langage** : Python 3.9
 * **Base de données** : MongoDB 8.0
@@ -76,6 +76,32 @@ etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform
 ```
 git clone https://github.com/PierreDff/OC_DE_projet5.git \
 cd OC_DE_projet5.git 
+```
+2.
+Le projet nécessite un fichier `.env` pour fonctionner.
+
+```bash
+# Dupliquer le fichier d'exemple (à créer si absent)
+cp .env.example .env
+```
+
+Ouvrez le fichier `.env` et définissez vos variables (NE PAS commiter ce fichier) :
+
+```ini
+# Identifiants Application
+APP_USER=app_user
+APP_PASSWORD=mon_mot_de_passe_securise
+
+# Identifiants Root MongoDB
+MONGO_ROOT_USER=admin
+MONGO_ROOT_PASSWORD=mon_mot_de_passe_root
+
+# Configuration Base de Données
+MONGO_HOST=mongodb
+MONGO_PORT=27017
+MONGO_DB=healthcare_db
+MONGO_COLLECTION=patients
+BATCH_SIZE=1000
 ```
 
 2. Lancer la migration (construction des images et démarrage) :
