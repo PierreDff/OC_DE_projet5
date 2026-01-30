@@ -78,7 +78,7 @@ git clone https://github.com/PierreDff/OC_DE_projet5.git \
 cd OC_DE_projet5.git 
 ```
 2. Créer votre .env
-# Dupliquer le fichier d'exemple et définissez vos variables
+Dupliquer le fichier d'exemple et définissez vos variables
 ```
 # Identifiants Application
 APP_USER=app_user
