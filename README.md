@@ -10,7 +10,7 @@ Ce projet implémente un pipeline ETL (Extract, Transform, Load) conteneurisé p
 
 L'application est construite en **Python 3.9**, gérée par **uv** pour les dépendances, et orchestrée via **Docker Compose**.
 
-## 📋 Fonctionnalités
+## Fonctionnalités
 
 * **Extraction & Nettoyage** : Lecture du CSV, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
 * **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
@@ -18,7 +18,7 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Optimisation** : Création automatique d'index (simples et composés) sur les champs `name`, `admission_type` et `date_of_admission` après la migration.
 * **Sécurité** : Gestion des accès bases de données via variables d'environnement et script d'initialisation.
 
-## 🛠️ Stack et architecture Technique
+## Stack et architecture Technique
 
 * **Langage** : Python 3.9
 * **Base de données** : MongoDB 8.0
@@ -29,7 +29,6 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
   * `uv` : Gestionnaire de paquets ultra-rapide (utilisé dans le build Docker).
 * **Infrastructure** : Docker & Docker Compose.
 
-## Architecture Technique
 ```
 .
 ├── .env                   			# variables d'environnement
