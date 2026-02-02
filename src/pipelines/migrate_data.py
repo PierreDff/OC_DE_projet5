@@ -13,6 +13,9 @@ class MongoMigrator:
         self.collection = self.db[settings.MONGO_COLLECTION]
 
     def migrate(self, df: pd.DataFrame):
+        logger.info("NETTOYAGE : Suppression des données existantes")
+        self.collection.delete_many({})
+        
         data_dict = df.to_dict("records")
         total_records = len(data_dict)
         
@@ -37,5 +40,3 @@ class MongoMigrator:
         self.collection.create_index("name")
         # Index sur le type d'admission et la date pour les stats
         self.collection.create_index([("admission_type", 1), ("date_of_admission", -1)])
-        # Index unique composite pour éviter les doublons logiques si nécessaire
-        # self.collection.create_index([("name", 1), ("date_of_admission", 1)], unique=True)
