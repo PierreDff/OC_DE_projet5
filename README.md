@@ -78,7 +78,8 @@ git clone https://github.com/PierreDff/OC_DE_projet5.git
 cd OC_DE_projet5.git 
 ```
 2. Créer votre .env (modifier le ".env.example")
-Deux utilisateurs sont créés :\
+
+Deux utilisateurs sont créés :
 - le root ayant tous les droits
 - l'utilisateur app_user qui peut lire et écrire
 ```
@@ -106,6 +107,15 @@ docker-compose up --build
 
 3. Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.\
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
+
+Pour arrêter les conteneurs et le réseau:
+```
+docker-compose down
+```
+Pour lancer la migration de nouveau :
+```
+docker-compose up
+```
 
 ## Modélisation des Données (Schema Design)
 
