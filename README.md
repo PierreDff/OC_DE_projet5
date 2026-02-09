@@ -1,4 +1,5 @@
-# Migrez des données médicales à l'aide du NoSQL
+# Migration de données médicales vers MongoDB
+
 Projet 5 de la formation Data Engineer d'Open Classrooms
 
 ## Contexte du Projet
@@ -76,7 +77,10 @@ etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform
 git clone https://github.com/PierreDff/OC_DE_projet5.git
 cd OC_DE_projet5.git 
 ```
-2. Créer votre .env (Dupliquer le fichier d'exemple et définissez vos variables)
+2. Créer votre .env (modifier le ".env.example")
+Deux utilisateurs sont créés :
+- le root ayant tous les droits
+- l'utilisateur app_user qui peut lire et écrire
 ```
 # Identifiants Application
 APP_USER=app_user
