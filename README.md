@@ -105,7 +105,7 @@ BATCH_SIZE=1000
 docker-compose up --build
 ```
 
-4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.**\
+4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.**
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
 
 Pour arrêter les conteneurs et le réseau :
@@ -130,7 +130,7 @@ pytest
 
 ## Modélisation des Données (Schema Design)
 
-Collection : patients
+**Collection : patients**
 
 
 Champ | Type | Description
@@ -151,9 +151,7 @@ Champ | Type | Description
 ```Medication``` | string | Médication
 ```Test_Results``` | string | Résultats des tests médicaux
 
-Exemple de Document :
-
-JSON
+**Exemple de Document (JSON) :**
 ```
 {
   "_id": "ObjectId(...)",
