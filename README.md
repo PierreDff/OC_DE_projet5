@@ -119,11 +119,11 @@ docker-compose up
 
 ## Tests et Qualité du Code 
 Les tests ne sont pas exécutés automatiquement au lancement de l'application (image de production). Voici comment les lancer manuellement.  
-### Installer les dépendances de développement
+1. Installer les dépendances de développement
 ```
 pip install ".[dev]"
 ```
-### Lancer la suite de tests (unitaires et intégration)
+2. Lancer la suite de tests (unitaires et intégration)
 ```
 pytest
 ```
