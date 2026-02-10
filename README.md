@@ -226,11 +226,16 @@ Root (Admin) : Droits complets sur le cluster. Créé au lancement du conteneur 
 App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db hospital_db uniquement) au lieu du root.
 
 ## Choix Techniques
-Pourquoi MongoDB ? La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
+Pourquoi MongoDB ?
 
-Pourquoi Docker ? Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
+La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
+
+Pourquoi Docker ?
+
+Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
 
 Prochaines étapes (Roadmap AWS)
+
 Déploiement de l'image Docker sur Amazon ECR (Elastic Container Registry).
 
 Hébergement du script sur Amazon ECS (Elastic Container Service).
