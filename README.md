@@ -108,13 +108,24 @@ docker-compose up --build
 3. Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.\
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
 
-Pour arrêter les conteneurs et le réseau:
+Pour arrêter les conteneurs et le réseau :
 ```
 docker-compose down
 ```
-Pour lancer la migration de nouveau :
+Pour relancer :
 ```
 docker-compose up
+```
+
+## Tests et Qualité du Code 
+Les tests ne sont pas exécutés automatiquement au lancement de l'application (image de production). Voici comment les lancer manuellement.  
+### Installer les dépendances de développement
+```
+pip install ".[dev]"
+```
+### Lancer la suite de tests (unitaires et intégration)
+```
+pytest
 ```
 
 ## Modélisation des Données (Schema Design)
@@ -206,7 +217,7 @@ Pourquoi MongoDB ? La variété des conditions médicales et l'évolution potent
 
 Pourquoi Docker ? Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
 
-☁️ Prochaines étapes (Roadmap AWS)
+Prochaines étapes (Roadmap AWS)
 Déploiement de l'image Docker sur Amazon ECR (Elastic Container Registry).
 
 Hébergement du script sur Amazon ECS (Elastic Container Service).
