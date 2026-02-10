@@ -71,13 +71,13 @@ etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform
 [MongoDB Compass](https://www.mongodb.com/products/tools/compass) pour visualiser les datas et faire des requêtes.
 
 ### Installation et Lancement
-1. Cloner le dépôt :
+1. **Cloner le dépôt :**
 
 ```
 git clone https://github.com/PierreDff/OC_DE_projet5.git
 cd OC_DE_projet5.git 
 ```
-2. Créer votre .env (modifier le ".env.example")
+2. **Créer votre .env (modifier le ".env.example")**
 
 Deux utilisateurs sont créés :
 - le root ayant tous les droits
@@ -99,13 +99,13 @@ MONGO_COLLECTION=patients
 BATCH_SIZE=1000
 ```
 
-2. Lancer la migration (construction des images et démarrage) :
+3. **Lancer la migration (construction des images et démarrage) :**
 
 ```
 docker-compose up --build
 ```
 
-3. Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.\
+4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.**\
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
 
 Pour arrêter les conteneurs et le réseau :
@@ -119,11 +119,11 @@ docker-compose up
 
 ## Tests et Qualité du Code 
 Les tests ne sont pas exécutés automatiquement au lancement de l'application (image de production). Voici comment les lancer manuellement.  
-1. Installer les dépendances de développement
+1. **Installer les dépendances de développement**
 ```
 pip install ".[dev]"
 ```
-2. Lancer la suite de tests (unitaires et intégration)
+2. **Lancer la suite de tests (unitaires et intégration)**
 ```
 pytest
 ```
@@ -226,15 +226,15 @@ Root (Admin) : Droits complets sur le cluster. Créé au lancement du conteneur 
 App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db hospital_db uniquement) au lieu du root.
 
 ## Choix Techniques
-Pourquoi MongoDB ?
+**Pourquoi MongoDB ?**
 
 La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
 
-Pourquoi Docker ?
+**Pourquoi Docker ?**
 
 Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
 
-Prochaines étapes (Roadmap AWS)
+**Prochaines étapes (Roadmap AWS)**
 
 Déploiement de l'image Docker sur Amazon ECR (Elastic Container Registry).
 
