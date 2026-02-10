@@ -180,6 +180,19 @@ JSON
 ```
 Justification : Cette structure réduit le besoin de jointures coûteuses et regroupe les données qui sont souvent consultées ensemble.
 
+
+## Stratégie d'Indexation (Performance)
+Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux stratégies d'indexation sont appliquées automatiquement après la migration :
+
+1. **Index Simple sur `name`** : 
+   - *Objectif* : Recherche instantanée d'un patient par son nom (complexité O(log n)).
+   - *Usage* : Barre de recherche dans l'application métier.
+
+2. **Index Composé sur `admission_type` (1) et `date_of_admission` (-1)** :
+   - *Objectif* : Optimiser les tris et filtres chronologiques.
+   - *Usage* : Tableaux de bord (ex: "Afficher les 10 dernières admissions d'Urgence").
+
+
 ## Logique du Script de Migration (ETL)
 Le script migrate.py suit les étapes suivantes :
 
@@ -201,7 +214,7 @@ Load (Chargement) :
 
 Utilisation de insert_many() pour une insertion en masse optimisée.
 
-Indexation : Création d'index sur patient_info.name et admission_details.date_admission pour accélérer les recherches futures.
+Indexation : Création d'index sur `name` et le couple `admission_type` + `date_of_admission` pour accélérer les recherches futures.
 
 ## Sécurité et Gestion des Utilisateurs
 Dans cet environnement Dockerisé, l'authentification est gérée via les variables d'environnement (voir docker-compose.yml).
