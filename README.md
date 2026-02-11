@@ -106,6 +106,7 @@ docker-compose up --build
 ```
 
 4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée :**
+
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
 
 5. **Pour arrêter le conteneur et le réseau / pour le relancer :**
@@ -118,6 +119,7 @@ docker-compose up
 ```
 
 6. **Connexion à mongosh depuis le conteneur :**
+
 En tant qu'admin :
 ```
 docker-compose exec mongodb mongosh -u admin -p mot_de_passe --authenticationDatabase admin
