@@ -45,3 +45,8 @@ class MongoMigrator:
         self.collection.create_index("name")
         # Index sur le type d'admission et la date pour les stats
         self.collection.create_index([("admission_type", 1), ("date_of_admission", -1)])
+
+    def close(self):
+        """Ferme proprement la connexion au client MongoDB."""
+        self.client.close()
+        logger.info("Connexion MongoDB fermée.")

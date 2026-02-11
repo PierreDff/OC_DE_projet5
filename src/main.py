@@ -16,10 +16,14 @@ def main():
     
     # 2. Chargement
     migrator = MongoMigrator()
-    migrator.migrate(clean_df)
-    
-    # 3. Post-Optimisation
-    migrator.create_indexes()
+    try:
+        migrator.migrate(clean_df)
+        
+        # 3. Post-Optimisation
+        migrator.create_indexes()
+    finally:
+        # Assure la fermeture de la connexion même en cas d'erreur
+        migrator.close()
 
 if __name__ == "__main__":
     main()
