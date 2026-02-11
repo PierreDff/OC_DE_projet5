@@ -105,16 +105,26 @@ BATCH_SIZE=1000
 docker-compose up --build
 ```
 
-4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée.**
+4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée :**
 Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
 
-Pour arrêter les conteneurs et le réseau :
+5. **Pour arrêter le conteneur et le réseau / pour le relancer :**
 ```
 docker-compose down
 ```
-Pour relancer :
+
 ```
 docker-compose up
+```
+
+6. **Connexion à mongosh depuis le conteneur :**
+En tant qu'admin :
+```
+docker-compose exec mongodb mongosh -u admin -p mot_de_passe --authenticationDatabase admin
+```
+En tant qu'utilisateur :
+```
+docker-compose exec mongodb mongosh -u app_user -p mon_mot_de_passe_securise --authenticationDatabase healthcare_db
 ```
 
 ## Tests et Qualité du Code 
