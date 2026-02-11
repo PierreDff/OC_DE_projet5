@@ -14,6 +14,10 @@ class MongoMigrator:
 
     # Nettoyage et migration des données : on assure l'idempotence en supprimant les données existantes avant d'insérer les nouvelles.
     def migrate(self, df: pd.DataFrame):
+        if df.empty:
+            logger.warning("Le DataFrame est vide. Aucune migration effectuée.")
+            return
+        
         logger.info("NETTOYAGE : Suppression des données existantes")
         self.collection.delete_many({})
         
