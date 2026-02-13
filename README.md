@@ -189,10 +189,8 @@ sequenceDiagram
     ETL->>Net: Résolution DNS et connexion (settings.MONGO_URI)
     ETL->>Mongo: Insertion des documents
     ETL->>Mongo: Création des index
-    ETL->>Mongo: Fermeture de la connexion
 
     ETL-->>Docker: Tâche terminée (arrêt du conteneur ETL)
-    Utilisateur->>Docker : Arrêt du conteneur MongoDB (docker-compose down)
 ```
 
 ## Modélisation des Données (Schema Design)
