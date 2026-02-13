@@ -203,11 +203,11 @@ Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux 
 ## Sécurité et Gestion des Utilisateurs
 Dans cet environnement Dockerisé, l'authentification est gérée via les variables d'environnement (voir docker-compose.yml).
 
-Rôles définis :
+**Rôles définis** :
 
-Root (Admin) : Droits complets sur le cluster. Créé au lancement du conteneur Mongo.
+  - *Root (Admin)* : Droits complets sur le cluster. Créé au lancement du conteneur Mongo.
 
-App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db healthcare_db uniquement) au lieu du root.
+  - *App User (Simulé)* : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db healthcare_db uniquement) au lieu du root.
 
 ## Choix Techniques
 **Pourquoi MongoDB ?**
