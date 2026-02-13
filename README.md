@@ -19,7 +19,7 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Optimisation** : Création automatique d'index (simples et composés) après la migration sur les champs `name` et `admission_type` + `date_of_admission`.
 * **Sécurité** : Gestion des accès à la bases de données via variables d'environnement et script d'initialisation.
 
-## Stack et architecture Technique
+## Architecture Technique
 
 * **Langage** : Python 3.9
 * **Base de données** : MongoDB 8.0
@@ -32,6 +32,8 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
   * mongodb : Le serveur de base de données.
   * etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
 
+
+### Arborescence du Projet
 ```
 .
 ├── .env                   			# variables d'environnement
@@ -60,6 +62,10 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
     └── app_diagram.png         # diagramme du flux d'execution
 ```
     
+### Flux d'exécution du pipeline ETL conteneurisé
+
+![Flux ETL conteneurisé](./picture/app_diagram.png)
+
 ## Guide de Démarrage
 ### Prérequis
 [Docker Desktop](https://www.docker.com/get-started/) installé et lancé.
@@ -127,7 +133,7 @@ En tant qu'utilisateur :
 docker-compose exec mongodb mongosh -u app_user -p mon_mot_de_passe_securise --authenticationDatabase healthcare_db
 ```
 
-## Tests et Qualité du Code 
+## Tests
 Les tests ne sont pas exécutés automatiquement au lancement de l'application (image de production). Voici comment les lancer manuellement.  
 1. **Installer les dépendances de développement**
 ```
@@ -137,10 +143,6 @@ pip install ".[dev]"
 ```
 pytest
 ```
-
-## Flux d'exécution du pipeline ETL conteneurisé
-
-![Flux ETL conteneurisé](./picture/app_diagram.png)
 
 
 ## Modélisation des Données (Schema Design)
