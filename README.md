@@ -187,10 +187,6 @@ sequenceDiagram
 
     Note over ETL,Mongo: Load — migration et indexation dans MongoDB (migrate_data.py)
     ETL->>Net: Résolution DNS et connexion (settings.MONGO_URI)
-    ETL->>Mongo: Insertion des documents
-    ETL->>Mongo: Création des index
-
-    ETL-->>Docker: Tâche terminée (arrêt du conteneur ETL)
 ```
 
 ## Modélisation des Données (Schema Design)
