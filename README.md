@@ -54,6 +54,8 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 │   └── unit/               		# Tests unitaires
 │       └── test_process_data.py
 └── README.md               		# Description du projet, guide d'utilisation
+└── picture/
+    └── app_diagram.png
 ```
 
 Le projet utilise Docker Compose pour orchestrer deux services principaux :
