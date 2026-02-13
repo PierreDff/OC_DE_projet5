@@ -142,56 +142,8 @@ pytest
 
 ## Flux d'exécution du pipeline ETL conteneurisé
 
-```mermaid
-sequenceDiagram
-    participant Utilisateur as "Utilisateur"
-    participant Docker as "Docker Compose"
-    participant Dockerfile as "Dockerfile"
-    participant Net as "Réseau (etl_network)"
-    participant Volume as "Volume (mongo_data)"
-    participant Mongo as "Conteneur MongoDB"
-    participant ETL as "Conteneur etl_app"
+![Flux ETL conteneurisé](./picture/app_diagram.png)
 
-    Note over Utilisateur,ETL: Phase 1 - Infrastructure & Build
-    Utilisateur->>Docker: docker-compose up --build
-
-    Note right of Docker: Configuration et build des images
-    Docker->>Docker: Lecture du fichier .env
-    Docker->>Dockerfile: Lecture des instructions (FROM, COPY, RUN...)
-    Dockerfile-->>Docker: Construction de l'image etl_app (Python, dépendances)
-
-    Docker->>Net: Création du réseau etl_network
-    Docker->>Volume: Préparation du volume mongo_data
-
-    Note over Docker,Mongo: Phase 2 - Base de données & Initialisation
-    Docker->>Mongo: Démarrage du conteneur MongoDB (variables MONGO_...)
-    Mongo->>Volume: Montage du volume persistant
-    Mongo->>Mongo: Exécution init-mongo.sh (création utilisateurs si premier démarrage)
-    Mongo->>Net: Connexion au réseau
-    Mongo-->>Docker: MongoDB prêt
-
-    Note over Docker,ETL: Phase 3 - Application ETL
-    Docker->>ETL: Démarrage du conteneur etl_app (variables APP_...)
-    ETL->>Net: Connexion au réseau etl_network
-
-    Note over ETL: Chargement du module envconf.py (pydantic_settings)
-    ETL->>ETL: Lecture des variables d'environnement injectées (.env)
-    ETL->>ETL: Construction dynamique de settings.MONGO_URI
-
-    Note over ETL,Mongo: Phase 4 - Exécution du script ETL (main.py)
-    Note over ETL: Extract — lecture du fichier CSV source
-    ETL->>ETL: Lecture des données brutes
-
-    Note over ETL: Transform — nettoyage et typage (process_data.py)
-    ETL->>ETL: Transformations et validations
-
-    Note over ETL,Mongo: Load — migration et indexation dans MongoDB (migrate_data.py)
-    ETL->>Net: Résolution DNS et connexion (settings.MONGO_URI)
-    ETL->>Mongo: Insertion des documents
-    ETL->>Mongo: Création des index
-
-    ETL-->>Docker: Tâche terminée (arrêt du conteneur ETL)
-```
 
 ## Modélisation des Données (Schema Design)
 
