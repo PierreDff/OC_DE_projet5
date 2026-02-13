@@ -45,12 +45,12 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 ├── data/
 │   └── healthcare_dataset.csv  # Fichier des données à migrer
 └── src/
-    └── main.py             		# Point d'entrée pour la migration
-│   ├── utils/             		    # Utilitaires
-│   │   └── envconf.py      		# Charge les variables d'environnement
-│   └── pipelines/          		# Scripts de pipeline
-│       ├── migrate_data.py 		# Logique de migration vers MongoDB (Chargement)
-│       └── process_data.py 		# Extraction et Transformation du CSV
+    ├── main.py                 # Point d'entrée pour la migration
+    ├── utils/                  # Utilitaires
+    │   └── envconf.py          # Charge les variables d'environnement
+    └── pipelines/              # Scripts de pipeline
+        ├── migrate_data.py     # Logique de migration vers MongoDB (Chargement)
+        └── process_data.py     # Extraction et Transformation du CSV
 ├── tests/                  
 │   ├── integration/        		# Tests d'intégration avec mongomock
 │   │   └── test_migrate_data.py
@@ -110,7 +110,7 @@ docker-compose up --build
 
 4. **Vérification : Le script s'arrêtera automatiquement une fois la migration terminée :**
 
-Vous devriez voir dans les logs : "Test d'intégrité réussi : Tous les documents sont présents."
+Vous devriez voir dans les logs : "Migration terminée."
 
 5. **Pour arrêter le conteneur et le réseau / pour le relancer :**
 ```
@@ -176,14 +176,14 @@ Champ | Type | Description
   gender: 'Male',
   blood_type: 'B-',
   medical_condition: 'Cancer',
-  date_of_admission: 2024-01-31T00:00:00.000Z,
+  date_of_admission: ISODate('2024-01-31T00:00:00.000Z'),
   doctor: 'Matthew Smith',
   hospital: 'Sons and Miller',
   insurance_provider: 'Blue Cross',
   billing_amount: 18856.281305978155,
   room_number: 328,
   admission_type: 'Urgent',
-  discharge_date: 2024-02-02T00:00:00.000Z,
+  discharge_date: ISODate('2024-02-02T00:00:00.000Z'),
   medication: 'Paracetamol',
   test_results: 'Normal'
 }
@@ -200,25 +200,6 @@ Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux 
    - *Objectif* : Optimiser les tris et filtres chronologiques.
    - *Usage* : Tableaux de bord (ex: "Afficher les 10 dernières admissions d'Urgence").
 
-
-
-Le script migrate.py suit les étapes suivantes :
-
-Extract (Extraction) : Chargement du CSV via Pandas.
-
-Clean (Nettoyage) :
-
-Suppression des doublons (534 doublons identifiés lors de l'audit).
-
-Normalisation des noms (Mise en format "Title Case").
-
-Transform (Transformation) :
-
-Conversion des chaînes de caractères "Dates" en objets ISODate (format natif MongoDB).
-
-
-
-
 ## Sécurité et Gestion des Utilisateurs
 Dans cet environnement Dockerisé, l'authentification est gérée via les variables d'environnement (voir docker-compose.yml).
 
@@ -226,7 +207,7 @@ Rôles définis :
 
 Root (Admin) : Droits complets sur le cluster. Créé au lancement du conteneur Mongo.
 
-App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db hospital_db uniquement) au lieu du root.
+App User (Simulé) : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db healthcare_db uniquement) au lieu du root.
 
 ## Choix Techniques
 **Pourquoi MongoDB ?**
