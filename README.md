@@ -16,7 +16,7 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Extraction & Nettoyage** : Lecture du CSV, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
 * **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
 * **Idempotence** : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
-* **Optimisation** : Création automatique d'index (simples et composés) sur les champs `name`, `admission_type` et `date_of_admission` après la migration.
+* **Optimisation** : Création automatique d'index (simples et composés) sur les champs `name` et sr `admission_type` + `date_of_admission` après la migration.
 * **Sécurité** : Gestion des accès bases de données via variables d'environnement et script d'initialisation.
 
 ## Stack et architecture Technique
@@ -154,45 +154,42 @@ pytest
 
 Champ | Type | Description
 ------|------|------------
-```Name``` | string | Nom
-```Age``` | int |	Âge
-```Gender```| string | Genre
-```Blood_Type``` | string | Groupe sanguin
-```Medical_Condition``` | string | Pathologie
-```Date_of_Admission```| date| Date d'admission
-```Doctor``` | string | Médecin en charge
-```Hospital``` | string | Nom de l'hôpital d'admission
-```Insurance_Provider``` | string | Nom de l'assureur
-```Billing_Amount``` | float| Montant de la facture
-```Room_Number``` | int | Numéro de chambre
-```Admission_Type``` | string | Type d'admission (Urgence...)
-```Discharge_Date``` | date | Date de sortie
-```Medication``` | string | Médication
-```Test_Results``` | string | Résultats des tests médicaux
+```name``` | string | Nom
+```age``` | int |	Âge
+```gender```| string | Genre
+```blood_type``` | string | Groupe sanguin
+```medical_condition``` | string | Pathologie
+```date_of_admission```| date| Date d'admission
+```doctor``` | string | Médecin en charge
+```hospital``` | string | Nom de l'hôpital d'admission
+```insurance_provider``` | string | Nom de l'assureur
+```billing_amount``` | float| Montant de la facture
+```room_number``` | int | Numéro de chambre
+```admission_type``` | string | Type d'admission (Urgence...)
+```discharge_date``` | date | Date de sortie
+```medication``` | string | Médication
+```test_results``` | string | Résultats des tests médicaux
 
 **Exemple de Document (JSON) :**
 ```
 {
-  "_id": "ObjectId(...)",
-  "name": "B**** J******",
-  "age": 30,
-  "gender": "Male",
-  "blood_type": "B-"
-  "date_admission": ISODate("2024-01-31T00:00:00Z"),
-  "hospital": "Sons and Miller",
-  "admission_type": "Urgent",
-  "doctor": "Matthew Smith"
-  "condition": "Cancer",
-  "medication": "Paracetamol",
-  "test_results": "Normal"
-  "provider": "Blue Cross",
-  "billing_amount": 18856.28
-  "room_number": 328,
-  "admission_type": "Urgent",
-  "discharge_date": ISODate("2024-02-02T00:00:00.000Z"),
-  "medication": "Paracetamol",
-  "test_results": "Normal"
-  }
+  _id: ObjectId('698c495861c3658ccbac0c85'),
+  name: 'B**** J******',
+  age: 30,
+  gender: 'Male',
+  blood_type: 'B-',
+  medical_condition: 'Cancer',
+  date_of_admission: 2024-01-31T00:00:00.000Z,
+  doctor: 'Matthew Smith',
+  hospital: 'Sons and Miller',
+  insurance_provider: 'Blue Cross',
+  billing_amount: 18856.281305978155,
+  room_number: 328,
+  admission_type: 'Urgent',
+  discharge_date: 2024-02-02T00:00:00.000Z,
+  medication: 'Paracetamol',
+  test_results: 'Normal'
+}
 
 ```
 Justification : Cette structure réduit le besoin de jointures coûteuses et regroupe les données qui sont souvent consultées ensemble.
