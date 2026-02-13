@@ -16,8 +16,8 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Extraction & Nettoyage** : Lecture du CSV, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
 * **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
 * **Idempotence** : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
-* **Optimisation** : Création automatique d'index (simples et composés) sur les champs `name` et sr `admission_type` + `date_of_admission` après la migration.
-* **Sécurité** : Gestion des accès bases de données via variables d'environnement et script d'initialisation.
+* **Optimisation** : Création automatique d'index (simples et composés) après la migration sur les champs `name` et `admission_type` + `date_of_admission`.
+* **Sécurité** : Gestion des accès à la bases de données via variables d'environnement et script d'initialisation.
 
 ## Stack et architecture Technique
 
@@ -28,19 +28,21 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
   * `pymongo` : Driver MongoDB.
   * `pydantic-settings` : Gestion robuste de la configuration.
   * `uv` : Gestionnaire de paquets (utilisé dans le build Docker).
-* **Infrastructure** : Docker & Docker Compose.
+* **Infrastructure** : Docker & Docker Compose pour orchestrer deux services principaux :
+  * mongodb : Le serveur de base de données.
+  * etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
 
 ```
 .
 ├── .env                   			# variables d'environnement
 ├── Dockerfile             			# configuration de l'image Docker
 ├── docker-compose.yml	  			# Orchestration
-├── init-mongo/			  			# Script d'initialisation de MongoDB
+├── init-mongo/			  			    # Script d'initialisation de MongoDB
 │   └── init-mongo.sh
-├── uv.lock          		  		# Vérouillage des dépendances UV
-├── pyproject.toml		  			# Configuration de UV et des dépendances
+├── uv.lock          		  		  # Vérouillage des dépendances UV
+├── pyproject.toml		  			  # Configuration de UV et des dépendances
 ├── data/
-│   └── healthcare_dataset.csv 	    # Fichier des données à migrer
+│   └── healthcare_dataset.csv  # Fichier des données à migrer
 └── src/
     └── main.py             		# Point d'entrée pour la migration
 │   ├── utils/             		    # Utilitaires
@@ -55,14 +57,8 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 │       └── test_process_data.py
 └── README.md               		# Description du projet, guide d'utilisation
 └── picture/
-    └── app_diagram.png
+    └── app_diagram.png         # diagramme du flux d'execution
 ```
-
-Le projet utilise Docker Compose pour orchestrer deux services principaux :
-
-mongodb : Le serveur de base de données.
-
-etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
     
 ## Guide de Démarrage
 ### Prérequis
@@ -190,10 +186,7 @@ Champ | Type | Description
   medication: 'Paracetamol',
   test_results: 'Normal'
 }
-
 ```
-Justification : Cette structure réduit le besoin de jointures coûteuses et regroupe les données qui sont souvent consultées ensemble.
-
 
 ## Stratégie d'Indexation (Performance)
 Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux stratégies d'indexation sont appliquées automatiquement après la migration :
