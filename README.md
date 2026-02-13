@@ -144,6 +144,8 @@ pytest
 
 ```mermaid
 sequenceDiagram
+    title Flux d'exécution du pipeline ETL conteneurisé
+
     participant Utilisateur as "Utilisateur"
     participant Docker as "Docker Compose"
     participant Dockerfile as "Dockerfile"
@@ -174,22 +176,30 @@ sequenceDiagram
     Docker->>ETL: Démarrage du conteneur etl_app (variables APP_...)
     ETL->>Net: Connexion au réseau etl_network
 
+    rect rgb(255, 255, 240)
     Note over ETL: Chargement du module envconf.py (pydantic_settings)
     ETL->>ETL: Lecture des variables d'environnement injectées (.env)
     ETL->>ETL: Construction dynamique de settings.MONGO_URI
+    end
 
     Note over ETL,Mongo: Phase 4 - Exécution du script ETL (main.py)
+    rect rgb(220, 240, 255)
     Note over ETL: Extract — lecture du fichier CSV source
     ETL->>ETL: Lecture des données brutes
+    end
 
+    rect rgb(255, 230, 200)
     Note over ETL: Transform — nettoyage et typage (process_data.py)
     ETL->>ETL: Transformations et validations
+    end
 
+    rect rgb(235, 255, 235)
     Note over ETL,Mongo: Load — migration et indexation dans MongoDB (migrate_data.py)
     ETL->>Net: Résolution DNS et connexion (settings.MONGO_URI)
     ETL->>Mongo: Insertion des documents
     ETL->>Mongo: Création des index
     ETL->>Mongo: Fermeture de la connexion
+    end
 
     ETL-->>Docker: Tâche terminée (arrêt du conteneur ETL)
     Utilisateur->>Docker : Arrêt du conteneur MongoDB (docker-compose down)
