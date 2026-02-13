@@ -17,7 +17,7 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
 * **Idempotence** : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
 * **Optimisation** : Création automatique d'index après la migration sur les champs `name` et le couple `admission_type` + `date_of_admission` pour accélérer les recherches futures.
-* **Sécurité** : Gestion des accès à la bases de données via variables d'environnement et script d'initialisation.
+* **Sécurité** : Gestion des accès à la base de données via variables d'environnement et script d'initialisation.
 
 ## Architecture Technique
 
@@ -40,23 +40,23 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 ├── docker-compose.yml	  			# Orchestration
 ├── init-mongo/			  			    # Script d'initialisation de MongoDB
 │   └── init-mongo.sh
-├── uv.lock          		  		  # Vérouillage des dépendances UV
+├── uv.lock          		  		  # Verrouillage des dépendances UV
 ├── pyproject.toml		  			  # Configuration de UV et des dépendances
 ├── data/
 │   └── healthcare_dataset.csv  # Fichier des données à migrer
-└── src/
-    ├── main.py                 # Point d'entrée pour la migration
-    ├── utils/                  # Utilitaires
-    │   └── envconf.py          # Charge les variables d'environnement
-    └── pipelines/              # Scripts de pipeline
-        ├── migrate_data.py     # Logique de migration vers MongoDB (Chargement)
-        └── process_data.py     # Extraction et Transformation du CSV
+├── src/
+│   ├── main.py                 # Point d'entrée pour la migration
+│   ├── utils/                  # Utilitaires
+│   │   └── envconf.py          # Charge les variables d'environnement
+│   └── pipelines/              # Scripts de pipeline
+│       ├── migrate_data.py     # Logique de migration vers MongoDB (Chargement)
+│       └── process_data.py     # Extraction et Transformation du CSV
 ├── tests/                  
 │   ├── integration/        		# Tests d'intégration avec mongomock
 │   │   └── test_migrate_data.py
 │   └── unit/               		# Tests unitaires
 │       └── test_process_data.py
-└── README.md               		# Description du projet, guide d'utilisation
+├── README.md               		# Description du projet, guide d'utilisation
 └── picture/
     └── app_diagram.png         # diagramme du flux d'execution
 ```
@@ -144,7 +144,7 @@ pytest
 ```
 
 
-## Modélisation des Données (Schema Design)
+## Modélisation des Données
 
 **Collection : patients**
 
@@ -189,8 +189,8 @@ Champ | Type | Description
 }
 ```
 
-## Stratégie d'Indexation (Performance)
-Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux stratégies d'indexation sont appliquées automatiquement après la migration :
+## Stratégie d'Indexation
+Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux stratégies d'indexation sont appliquées après la migration :
 
 1. **Index Simple sur `name`** : 
    - *Objectif* : Recherche instantanée d'un patient par son nom (complexité O(log n)).
