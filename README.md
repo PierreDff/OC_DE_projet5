@@ -144,8 +144,6 @@ pytest
 
 ```mermaid
 sequenceDiagram
-    title Flux d'exécution du pipeline ETL conteneurisé
-
     participant Utilisateur as "Utilisateur"
     participant Docker as "Docker Compose"
     participant Dockerfile as "Dockerfile"
