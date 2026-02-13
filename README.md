@@ -32,6 +32,14 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
   * mongodb : Le serveur de base de données.
   * etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
 
+**Pourquoi MongoDB ?**
+
+La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
+
+**Pourquoi Docker ?**
+
+Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
+
 ### Arborescence du Projet
 ```
 .
@@ -209,16 +217,7 @@ Dans cet environnement Dockerisé, l'authentification est gérée via les variab
 
   - *App User (Simulé)* : Dans un environnement de production, l'application utiliserait un utilisateur avec des droits limités (readWrite sur la db healthcare_db uniquement) au lieu du root.
 
-## Choix Techniques
-**Pourquoi MongoDB ?**
-
-La variété des conditions médicales et l'évolution potentielle des protocoles de soins rendent le schéma flexible du NoSQL plus adapté que le SQL rigide.
-
-**Pourquoi Docker ?**
-
-Assure que le script de migration s'exécute exactement de la même manière sur la machine du développeur et sur le futur serveur de production, éliminant les erreurs de type "ça marche chez moi".
-
-**Prochaines étapes (Roadmap AWS)**
+## Prochaines étapes (Roadmap AWS)
 
 Déploiement de l'image Docker sur Amazon ECR (Elastic Container Registry).
 
