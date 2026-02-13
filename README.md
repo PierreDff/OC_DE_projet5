@@ -140,11 +140,11 @@ pip install ".[dev]"
 pytest
 ```
 
-## Fonctionnement de l'application
+## Flux d'exécution du pipeline ETL conteneurisé
 
 ```mermaid
 sequenceDiagram
-    title Déroulement du docker-compose pour l’application ETL
+    title Flux d'exécution du pipeline ETL conteneurisé
 
     participant Utilisateur as "Utilisateur"
     participant Docker as "Docker Compose"
