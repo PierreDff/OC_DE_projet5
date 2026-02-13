@@ -13,10 +13,10 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 
 ## Fonctionnalités
 
-* **Extraction & Nettoyage** : Lecture du CSV, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
+* **Extraction & Nettoyage** : Lecture du CSV via Pandas, suppression des doublons, normalisation des noms (Title Case), typage des dates, formatage des colonnes en *snake_case* et déduplication.
 * **Migration MongoDB** : Insertion par lots (par 1000) pour gérer la charge.
 * **Idempotence** : Le script nettoie la collection cible avant l'insertion pour éviter les doublons lors des relances.
-* **Optimisation** : Création automatique d'index (simples et composés) après la migration sur les champs `name` et `admission_type` + `date_of_admission`.
+* **Optimisation** : Création automatique d'index après la migration sur les champs `name` et le couple `admission_type` + `date_of_admission` pour accélérer les recherches futures.
 * **Sécurité** : Gestion des accès à la bases de données via variables d'environnement et script d'initialisation.
 
 ## Architecture Technique
@@ -31,7 +31,6 @@ L'application est construite en **Python 3.9**, gérée par **uv** pour les dép
 * **Infrastructure** : Docker & Docker Compose pour orchestrer deux services principaux :
   * mongodb : Le serveur de base de données.
   * etl_app : Un conteneur Python éphémère qui effectue l'ETL (Extract, Transform, Load).
-
 
 ### Arborescence du Projet
 ```
@@ -202,7 +201,7 @@ Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux 
    - *Usage* : Tableaux de bord (ex: "Afficher les 10 dernières admissions d'Urgence").
 
 
-## Logique du Script de Migration (ETL)
+
 Le script migrate.py suit les étapes suivantes :
 
 Extract (Extraction) : Chargement du CSV via Pandas.
@@ -217,13 +216,8 @@ Transform (Transformation) :
 
 Conversion des chaînes de caractères "Dates" en objets ISODate (format natif MongoDB).
 
-Restructuration des colonnes plates en dictionnaires imbriqués.
 
-Load (Chargement) :
 
-Utilisation de insert_many() pour une insertion en masse optimisée.
-
-Indexation : Création d'index sur `name` et le couple `admission_type` + `date_of_admission` pour accélérer les recherches futures.
 
 ## Sécurité et Gestion des Utilisateurs
 Dans cet environnement Dockerisé, l'authentification est gérée via les variables d'environnement (voir docker-compose.yml).
