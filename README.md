@@ -64,9 +64,7 @@ Assure que le script de migration s'exécute exactement de la même manière sur
 │   │   └── test_migrate_data.py
 │   └── unit/               		# Tests unitaires
 │       └── test_process_data.py
-├── README.md               		# Description du projet, guide d'utilisation
-└── picture/
-    └── app_diagram.png         # diagramme du flux d'execution
+└── README.md               		# Description du projet, guide d'utilisation
 ```
     
 ### Flux d'exécution du pipeline ETL conteneurisé
