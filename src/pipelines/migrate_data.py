@@ -38,6 +38,7 @@ class MongoMigrator:
         
         logger.info("Migration terminée.")
 
+    # Création d'index pour optimiser les recherches futures
     def create_indexes(self):
         """Création d'index pour optimiser les recherches futures."""
         logger.info("Création des index...")
@@ -46,6 +47,7 @@ class MongoMigrator:
         # Index sur le type d'admission et la date pour les stats
         self.collection.create_index([("admission_type", 1), ("date_of_admission", -1)])
 
+    # Fermeture de la connexion au client MongoDB
     def close(self):
         """Ferme proprement la connexion au client MongoDB."""
         self.client.close()

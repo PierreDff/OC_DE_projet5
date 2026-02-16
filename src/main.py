@@ -14,12 +14,14 @@ def main():
     raw_df = load_data(csv_path)
     clean_df = clean_dataframe(raw_df)
     
-    # 2. Chargement
+    # 2. Chargement dans MongoDB
+    # Connexion à la classe MongoMigrator
     migrator = MongoMigrator()
     try:
+        # Migration des données
         migrator.migrate(clean_df)
         
-        # 3. Post-Optimisation
+        # 3. Post-Optimisation : Création d'index pour optimiser les recherches futures
         migrator.create_indexes()
     finally:
         # Assure la fermeture de la connexion même en cas d'erreur
