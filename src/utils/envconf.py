@@ -9,14 +9,14 @@ class Settings(BaseSettings):
 
     # Champs Obligatoires
     # Si ces variables ne sont pas trouvées dans le .env, l'application s'arrête immédiatement.
-    # Pydantic tente de convertir (caster) la valeur vers le type demandé.
+    # Pydantic vérifie et tente de convertir (caster) la valeur vers le type demandé.
     APP_USER: str
     APP_PASSWORD: str
     MONGO_HOST: str
 
     # Champs Optionnels (avec valeurs par défaut)
     # Si la variable n'est pas dans le .env, la valeur par défaut est utilisée.
-    # Pydantic convertit automatiquement le texte du .env en entier (int) pour PORT et BATCH_SIZE.
+    # Pydantic convertit automatiquement le texte du .env en entier (int) pour MONGO_PORT et BATCH_SIZE.
     MONGO_PORT: int = 27017
     MONGO_DB: str = "healthcare_db"
     MONGO_COLLECTION: str = "patients"
