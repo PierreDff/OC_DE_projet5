@@ -28,6 +28,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def load_data(filepath: str) -> pd.DataFrame:
+    """Charge un fichier CSV dans un DataFrame Pandas."""
     try:
         df = pd.read_csv(filepath)
         logger.info(f"Chargement de {len(df)} lignes depuis {filepath}")

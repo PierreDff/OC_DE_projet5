@@ -13,7 +13,7 @@ class MongoMigrator:
         self.collection = self.db[settings.MONGO_COLLECTION]
 
     # Nettoyage et migration des données : on assure l'idempotence en supprimant les données existantes avant d'insérer les nouvelles.
-    def migrate(self, df: pd.DataFrame):
+    def migrate(self, df: pd.DataFrame) -> None:
         if df.empty:
             logger.warning("Le DataFrame est vide. Aucune migration effectuée.")
             return
@@ -39,7 +39,7 @@ class MongoMigrator:
         logger.info("Migration terminée.")
 
     # Création d'index pour optimiser les recherches futures
-    def create_indexes(self):
+    def create_indexes(self) -> None:
         """Création d'index pour optimiser les recherches futures."""
         logger.info("Création des index...")
         # Index sur le nom pour recherche rapide
@@ -48,7 +48,7 @@ class MongoMigrator:
         self.collection.create_index([("admission_type", 1), ("date_of_admission", -1)])
 
     # Fermeture de la connexion au client MongoDB
-    def close(self):
+    def close(self) -> None:
         """Ferme proprement la connexion au client MongoDB."""
         self.client.close()
         logger.info("Connexion MongoDB fermée.")
