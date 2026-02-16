@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     # Champs Obligatoires
     # Si ces variables ne sont pas trouvées dans le .env, l'application s'arrête immédiatement.
-    # Pydantic vérifie aussi que le type est correct (ici des chaînes de caractères).
+    # Pydantic tente de convertir (caster) la valeur vers le type demandé.
     APP_USER: str
     APP_PASSWORD: str
     MONGO_HOST: str
