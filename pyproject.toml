@@ -14,8 +14,11 @@ dependencies = [
 # Optionnel : dépendances pour le développement et les tests
 [project.optional-dependencies]
 dev = [
+    # Framework de test pour assurer la fiabilité du code
     "pytest>=7.0.0",
+    # Utilisation de la librairie mongomock pour le test due migration sans nécessiter une instance MongoDB réelle
     "mongomock>=4.1.0",
+    # Linter pour assurer la qualité du code
     "ruff>=0.1.0"
 ]
 
