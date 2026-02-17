@@ -5,7 +5,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.pipelines.process_data import load_data, clean_dataframe
 from src.pipelines.migrate_data import MongoMigrator
-from src.utils.envconf import settings
 
 def main():
     csv_path = "data/healthcare_dataset.csv"
