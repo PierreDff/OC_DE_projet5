@@ -44,6 +44,20 @@ class MongoMigrator:
         
         logger.info("Migration terminée.")
 
+    def verify_migration(self, expected_count: int) -> None:
+        """
+        Vérifie que le nombre de documents dans la collection correspond au nombre attendu.
+        Lève une exception si les comptes ne correspondent pas.
+        """
+        actual_count = self.collection.count_documents({})
+        
+        if actual_count != expected_count:
+            error_msg = f"ERREUR DE MIGRATION : {expected_count} attendus, mais {actual_count} trouvés dans MongoDB."
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+        
+        logger.info(f"SUCCÈS : validation des données ({actual_count} documents).")
+
     def create_indexes(self) -> None:
         """
         Crée les index nécessaires pour optimiser les performances de lecture.

@@ -20,6 +20,9 @@ def main():
         # Migration des données
         migrator.migrate(clean_df)
         
+        # Validation de la migration (Data Quality Check)
+        migrator.verify_migration(expected_count=len(clean_df))
+        
         # 3. Post-Optimisation : Création d'index pour optimiser les recherches futures
         migrator.create_indexes()
     finally:
