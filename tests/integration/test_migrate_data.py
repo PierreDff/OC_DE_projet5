@@ -11,7 +11,7 @@ def test_migration_logic(mock_client):
     mock_client.return_value = mock_mongo
     
     # Données de test
-    df = pd.DataFrame([{'name': 'Test User', 'age': 30}])
+    df = pd.DataFrame([{'name': 'Test Patient', 'admission_type': 'Emergency'}])
     
     migrator = MongoMigrator()
     migrator.migrate(df)
@@ -20,4 +20,5 @@ def test_migration_logic(mock_client):
     # On utilise settings pour récupérer dynamiquement le nom de la DB et de la collection
     inserted_doc = mock_mongo[settings.MONGO_DB][settings.MONGO_COLLECTION].find_one()
     assert inserted_doc is not None, "Le document n'a pas été inséré dans la base mockée"
-    assert inserted_doc['name'] == 'Test User'
+    assert inserted_doc['name'] == 'Test Patient'
+    assert inserted_doc['admission_type'] == 'Emergency'
