@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     Gestion centralisée de la configuration via Pydantic.
     Pydantic va lire les variables d'environnement (système ou fichier .env),
     En héritant de BaseSettings, cette classe charge automatiquement les variables d'environnement (système ou fichier .env),
-    les valider selon les types spécifiés, et lever une erreur si une variable obligatoire manque.
+    les valide selon les types spécifiés, et lève une erreur si une variable obligatoire manque.
     """
 
     # Champs Obligatoires
