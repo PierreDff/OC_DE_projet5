@@ -140,13 +140,15 @@ docker-compose exec mongodb mongosh -u app_user -p mon_mot_de_passe_securise --a
 
 ## Tests
 Les tests ne sont pas exécutés automatiquement au lancement de l'application (image de production). Voici comment les lancer manuellement.  
-1. **Installer les dépendances de développement**
+
+1. **Installer les dépendances (via uv)**
+Cela créera automatiquement un environnement virtuel et installera les outils de test.
 ```
-pip install ".[dev]"
+uv sync --extra dev
 ```
 2. **Lancer la suite de tests (unitaires et intégration)**
 ```
-pytest
+uv run pytest
 ```
 
 
