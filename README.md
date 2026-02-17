@@ -43,13 +43,13 @@ Assure que le script de migration s'exécute exactement de la même manière sur
 ### Arborescence du Projet
 ```
 .
-├── .env                   			# variables d'environnement
-├── Dockerfile             			# configuration de l'image Docker
-├── docker-compose.yml	  			# Orchestration
-├── init-mongo/			  			    # Script d'initialisation de MongoDB
-│   └── init-mongo.sh
-├── uv.lock          		  		  # Verrouillage des dépendances UV
-├── pyproject.toml		  			  # Configuration de UV et des dépendances
+├── .env                        # variables d'environnement
+├── Dockerfile                  # configuration de l'image Docker
+├── docker-compose.yml	        # Orchestration
+├── init-mongo/		              
+│   └── init-mongo.sh           # Script d'initialisation de MongoDB
+├── uv.lock                     # Verrouillage des dépendances UV
+├── pyproject.toml              # Configuration de UV et des dépendances
 ├── data/
 │   └── healthcare_dataset.csv  # Fichier des données à migrer
 ├── src/
@@ -60,11 +60,11 @@ Assure que le script de migration s'exécute exactement de la même manière sur
 │       ├── migrate_data.py     # Logique de migration vers MongoDB (Chargement)
 │       └── process_data.py     # Extraction et Transformation du CSV
 ├── tests/                  
-│   ├── integration/        		# Tests d'intégration avec mongomock
+│   ├── integration/            # Tests d'intégration avec mongomock
 │   │   └── test_migrate_data.py
-│   └── unit/               		# Tests unitaires
+│   └── unit/                   # Tests unitaires
 │       └── test_process_data.py
-└── README.md               		# Description du projet, guide d'utilisation
+└── README.md                   # Description du projet, guide d'utilisation
 ```
     
 ### Flux d'exécution du pipeline ETL conteneurisé
