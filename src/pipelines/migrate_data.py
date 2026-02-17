@@ -12,8 +12,13 @@ class MongoMigrator:
         self.db = self.client[settings.MONGO_DB]
         self.collection = self.db[settings.MONGO_COLLECTION]
 
-    # Nettoyage et migration des données : on assure l'idempotence en supprimant les données existantes avant d'insérer les nouvelles.
     def migrate(self, df: pd.DataFrame) -> None:
+        """
+        Exécute la migration des données du DataFrame vers MongoDB.
+        
+        Cette méthode est idempotente : elle supprime les données existantes 
+        avant d'insérer les nouvelles pour éviter les doublons.
+        """
         if df.empty:
             logger.warning("Le DataFrame est vide. Aucune migration effectuée.")
             return
@@ -21,6 +26,7 @@ class MongoMigrator:
         logger.info("NETTOYAGE : Suppression des données existantes")
         self.collection.delete_many({})
         
+        # Transformation du DataFrame en liste de dictionnaires (format JSON-like)
         data_dict = df.to_dict("records")
         total_records = len(data_dict)
         
@@ -38,16 +44,18 @@ class MongoMigrator:
         
         logger.info("Migration terminée.")
 
-    # Création d'index pour optimiser les recherches futures
     def create_indexes(self) -> None:
-        """Création d'index pour optimiser les recherches futures."""
+        """
+        Crée les index nécessaires pour optimiser les performances de lecture.
+        
+        Index créés :
+        - 'name' : pour la recherche textuelle simple.
+        - 'admission_type' + 'date_of_admission' : index composé pour les filtres et tris.
+        """
         logger.info("Création des index...")
-        # Index sur le nom pour recherche rapide
         self.collection.create_index("name")
-        # Index sur le type d'admission et la date pour les stats
         self.collection.create_index([("admission_type", 1), ("date_of_admission", -1)])
 
-    # Fermeture de la connexion au client MongoDB
     def close(self) -> None:
         """Ferme proprement la connexion au client MongoDB."""
         self.client.close()

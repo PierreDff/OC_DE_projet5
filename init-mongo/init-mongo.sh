@@ -1,9 +1,13 @@
 #!/bin/bash
 set -e
 
+# Script d'initialisation exécuté au premier démarrage du conteneur MongoDB.
+# Il crée les utilisateurs et gère l'idempotence (ne crash pas si l'utilisateur existe déjà).
+
 mongosh <<EOF
 use admin
 try {
+  // Création de l'admin root
   db.createUser({
     user: "$MONGO_INITDB_ROOT_USERNAME",
     pwd: "$MONGO_INITDB_ROOT_PASSWORD",
@@ -16,6 +20,7 @@ try {
 
 use healthcare_db
 try {
+  // Création de l'utilisateur applicatif avec droits de lecture/écriture
   db.createUser({
     user: "$APP_USER",
     pwd: "$APP_PASSWORD",
