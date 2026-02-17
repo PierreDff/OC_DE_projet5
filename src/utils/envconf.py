@@ -4,6 +4,7 @@ class Settings(BaseSettings):
     """
     Gestion centralisée de la configuration via Pydantic.
     Pydantic va lire les variables d'environnement (système ou fichier .env),
+    En héritant de BaseSettings, cette classe charge automatiquement les variables d'environnement (système ou fichier .env),
     les valider selon les types spécifiés, et lever une erreur si une variable obligatoire manque.
     """
 
@@ -27,9 +28,10 @@ class Settings(BaseSettings):
         """Reconstruction dynamique de l'URI de connexion MongoDB."""
         return f"mongodb://{self.APP_USER}:{self.APP_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/{self.MONGO_DB}"
     
-    # Configuration de Pydantic :
-    # env_file=".env" : Dit à Pydantic de chercher et lire le fichier .env automatiquement.
-    # extra="ignore" : Dit à Pydantic d'ignorer les variables du .env qui ne sont pas déclarées ci-dessus (évite les erreurs).
+    # Configuration du modèle (model_config) via SettingsConfigDict :
+    # C'est cet objet qui donne les instructions techniques à la classe BaseSettings.
+    # - env_file=".env" : L'instruction de charger les variables depuis ce fichier.
+    # - extra="ignore" : L'instruction d'ignorer les variables du .env qui ne sont pas définies dans la classe.
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 settings = Settings()
