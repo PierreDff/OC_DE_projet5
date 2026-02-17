@@ -204,7 +204,7 @@ Pour garantir des temps de réponse rapides sur les requêtes fréquentes, deux 
    - *Objectif* : Recherche instantanée d'un patient par son nom (complexité O(log n)).
    - *Usage* : Barre de recherche dans l'application métier.
 
-2. **Index Composé sur `admission_type` (1) et `date_of_admission` (-1)** :
+2. **Index Composé sur `admission_type` (croissant) et `date_of_admission` (décroissant)** :
    - *Objectif* : Optimiser les tris et filtres chronologiques.
    - *Usage* : Tableaux de bord (ex: "Afficher les 10 dernières admissions d'Urgence").
 
